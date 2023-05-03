@@ -58,9 +58,9 @@ function autoBind(_: any, _2: string, descriptor: PropertyDescriptor) {
 }
 
 class ProjectState {
+  private listeners: any[] = []
   private projects: any[] = []
   private static instance: ProjectState
-
   private contructor() {}
 
   static getInstance() {
@@ -68,6 +68,10 @@ class ProjectState {
 
     this.instance = new ProjectState()
     return this.instance
+  }
+
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn)
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
@@ -79,6 +83,10 @@ class ProjectState {
     }
 
     this.projects.push(newProject)
+
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice())
+    }
   }
 }
 
