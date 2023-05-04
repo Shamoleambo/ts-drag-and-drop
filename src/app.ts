@@ -72,8 +72,10 @@ class Project {
   ) {}
 }
 
+type Listener = (items: Projects[]) => void
+
 class ProjectState {
-  private listeners: any[] = []
+  private listeners: Listener[] = []
   private projects: Project[] = []
   private static instance: ProjectState
   private constructor() {}
@@ -85,7 +87,7 @@ class ProjectState {
     return this.instance
   }
 
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn)
   }
 
@@ -126,7 +128,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement
     this.element.id = `${this.type}-projects`
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects
       this.renderProjects()
     })
