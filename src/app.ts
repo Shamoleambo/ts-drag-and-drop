@@ -168,7 +168,14 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     })
   }
 
-  renderProjects() {
+  renderContent() {
+    const listId = `${this.type}-projects-list`
+    this.element.querySelector('ul')!.id = listId
+    this.element.querySelector('h2')!.textContent =
+      this.type.toUpperCase() + ' PROJECTS'
+  }
+
+  private renderProjects() {
     const listEl = document.getElementById(
       `${this.type}-projects-list`
     )! as HTMLUListElement
@@ -179,13 +186,6 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
       listItem.textContent = prjItem.title
       listEl.appendChild(listItem)
     }
-  }
-
-  renderContent() {
-    const listId = `${this.type}-projects-list`
-    this.element.querySelector('ul')!.id = listId
-    this.element.querySelector('h2')!.textContent =
-      this.type.toUpperCase() + ' PROJECTS'
   }
 }
 
