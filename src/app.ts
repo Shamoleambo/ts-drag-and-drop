@@ -5,7 +5,7 @@ interface Draggable {
 
 interface DragTarget {
   dragOverHandler(event: DragEvent): void
-  dropHanlder(event: DragEvent): void
+  dropHandler(event: DragEvent): void
   dragLeaveHandler(event: DragEvent): void
 }
 
