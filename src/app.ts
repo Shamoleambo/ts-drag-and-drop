@@ -72,7 +72,7 @@ class Project {
   ) {}
 }
 
-type Listener = (items: Projects[]) => void
+type Listener = (items: Project[]) => void
 
 class ProjectState {
   private listeners: Listener[] = []
