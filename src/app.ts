@@ -1,3 +1,14 @@
+interface Draggable {
+  dragStartHandler(event: DragEvent): void
+  dragEndHandler(event: DragEvent): void
+}
+
+interface DragTarget {
+  dragOverHandler(event: DragEvent): void
+  dropHanlder(event: DragEvent): void
+  dragLeaveHandler(event: DragEvent): void
+}
+
 interface Validatable {
   value: string | number
   required?: boolean
