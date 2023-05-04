@@ -144,24 +144,19 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   abstract renderContent(): void
 }
 
-class ProjectList {
-  templateElement: HTMLTemplateElement
-  hostElement: HTMLDivElement
-  element: HTMLElement
+class ProjectList extends Component<HTMLDivElement, HTMLElement> {
   assignedProjects: Project[]
 
   constructor(private type: 'active' | 'finished') {
-    this.templateElement = document.getElementById(
-      'project-list'
-    )! as HTMLTemplateElement
+    super('project-list', 'app', false, `${type}-projects`)
     this.hostElement = document.getElementById('app')! as HTMLDivElement
     this.assignedProjects = []
 
-    const importedNode = document.importNode(this.templateElement.content, true)
+    this.configure()
+    this.renderContent()
+  }
 
-    this.element = importedNode.firstElementChild as HTMLElement
-    this.element.id = `${this.type}-projects`
-
+  configure() {
     projectState.addListener((projects: Project[]) => {
       const relevantProjects = projects.filter((prj) => {
         if (this.type === 'active') return prj.status === ProjectStatus.Active
@@ -171,12 +166,9 @@ class ProjectList {
       this.assignedProjects = relevantProjects
       this.renderProjects()
     })
-
-    this.attach()
-    this.renderContent()
   }
 
-  private renderProjects() {
+  renderProjects() {
     const listEl = document.getElementById(
       `${this.type}-projects-list`
     )! as HTMLUListElement
@@ -189,15 +181,11 @@ class ProjectList {
     }
   }
 
-  private renderContent() {
+  renderContent() {
     const listId = `${this.type}-projects-list`
     this.element.querySelector('ul')!.id = listId
     this.element.querySelector('h2')!.textContent =
       this.type.toUpperCase() + ' PROJECTS'
-  }
-
-  private attach() {
-    this.hostElement.insertAdjacentElement('beforeend', this.element)
   }
 }
 
