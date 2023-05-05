@@ -1,3 +1,5 @@
+/// <reference path="./base-component.ts" />
+
 namespace App {
   export class ProjectItem
     extends Component<HTMLUListElement, HTMLLIElement>
